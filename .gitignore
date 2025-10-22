@@ -1,0 +1,76 @@
+# ==========================
+# Back-end (.NET / PHP)
+# ==========================
+
+# Pastas de build
+**/bin/
+**/obj/
+
+# Configurações do Visual Studio / IDEs
+*.user
+*.suo
+*.vs/
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Debug / Release / Logs
+*.log
+*.pdb
+
+# Arquivos de publish
+*.publish.xml
+*.deployment
+
+# Secrets e arquivos locais
+appsettings.*.json
+secrets.json
+
+# ==========================
+# Front-end (Angular / Node)
+# ==========================
+
+# Node modules
+/node_modules/
+
+# Build output
+/dist/
+/out-tsc/
+/tmp/
+/bazel-out/
+
+# Angular / CLI / cache
+/.angular/
+/.sass-cache/
+/coverage/
+
+# Environment files
+/src/environments/*.ts
+
+# Logs do Node
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Miscellaneous front
+/connect.lock
+/libpeerconnection.log
+/testem.log
+/typings
+__screenshots__/
+
+# ==========================
+# Sistema
+# ==========================
+
+.DS_Store
+Thumbs.db
+.history/*
+
