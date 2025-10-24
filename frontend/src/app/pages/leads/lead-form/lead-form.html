@@ -1,0 +1,45 @@
+<div class="lead-container">
+  <mat-card>
+    <!-- Cabeçalho azul -->
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-icon-button (click)="goBack()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="title-text">{{ lead ? 'Editar Lead' : 'Criar Lead' }}</span>
+        <span *ngIf="lead" class="lead-name">: {{ lead.name }}</span>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form [formGroup]="form" class="lead-form" novalidate>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="name?.hasError('required')">Nome é obrigatório</mat-error>
+            <mat-error *ngIf="name?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="email?.hasError('required')">Email é obrigatório</mat-error>
+            <mat-error *ngIf="email?.hasError('email')">Email inválido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let s of statusOptions" [value]="s">{{ s }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="accent" (click)="createLeadDirectly()" [disabled]="form.invalid">
+          {{ lead ? 'Atualizar' : 'Criar' }} </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
