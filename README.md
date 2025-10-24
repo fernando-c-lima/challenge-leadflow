@@ -33,7 +33,7 @@ dotnet run --project src/Api
 ```bash
 cd frontend
 npm install
-ng serve
+npm start
 ```
 
 - App: http://localhost:4200
