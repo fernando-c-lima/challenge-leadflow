@@ -4,6 +4,16 @@ CRUD de **Leads** com **Tasks** associadas.
 
 ---
 
+## ⚙️ Pré-requisitos
+
+Antes de rodar o projeto, você precisa ter instalado:
+
+- .NET SDK 8 ou 9 – Instalar .NET
+
+- Node.js (v18+ recomendado) e npm
+
+- (Opcional) Angular CLI se quiser rodar comandos ng globalmente
+
 ## 🧪 Tecnologias
 
 - **Backend:** .NET 8/9, EF Core (SQLite), MediatR, AutoMapper, FluentValidation  
