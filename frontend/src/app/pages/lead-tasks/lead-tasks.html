@@ -1,0 +1,146 @@
+<div class="tasks-container">
+  <mat-card>
+    <!-- Cabeçalho -->
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-icon-button (click)="goBack()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        Tasks do Lead #{{ leadId }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <!-- Formulário para criar nova task -->
+      <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()" class="task-form">
+        <div class="form-row">
+          <!-- Campo título -->
+          <mat-form-field appearance="outline" class="title-field">
+            <mat-label>Título da Task: </mat-label>
+            <input
+              matInput
+              formControlName="title"
+              placeholder="Ex: Fazer follow-up com cliente"
+            />
+         <mat-error
+            *ngIf="
+                taskForm.get('title')?.hasError('required') &&
+                (taskForm.get('title')?.touched || taskForm.get('title')?.dirty)
+            "
+            >
+            Título é obrigatório
+        </mat-error>
+          </mat-form-field>
+
+          <!-- Campo data -->
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>Prazo</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Campo status -->
+          <mat-form-field appearance="outline" class="status-field">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" placeholder="Selecione o status">
+                <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+                </mat-option>
+            </mat-select>
+
+            <mat-error
+                *ngIf="
+                taskForm.get('status')?.hasError('required') &&
+                (taskForm.get('status')?.touched || taskForm.get('status')?.dirty)
+                "
+            >
+                Selecione um status
+            </mat-error>
+        </mat-form-field>
+
+          <!-- Botão de adicionar -->
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="taskForm.invalid"
+            class="add-button"
+          >
+            <mat-icon>add</mat-icon>
+            Adicionar
+          </button>
+        </div>
+      </form>
+
+      <mat-divider></mat-divider>
+
+      <!-- Lista de tasks -->
+      <div class="tasks-list">
+        <h3>Tasks ({{ tasks.length }})</h3>
+
+        <!-- Quando não há tasks -->
+        <div *ngIf="tasks.length === 0" class="no-tasks">
+          <mat-icon>assignment</mat-icon>
+          <p>Nenhuma task encontrada para este lead.</p>
+        </div>
+
+        <!-- Cards de tarefas -->
+        <mat-card *ngFor="let task of tasks" class="task-item">
+          <div class="task-content">
+            <!-- Informações principais -->
+            <div class="task-info">
+              <h4 class="task-title">{{ task.title }}</h4>
+
+              <div class="task-details">
+                <span
+                  class="task-status"
+                  [class]="'status-' + getStatusLabel(task.status).toLowerCase()"
+                >
+                  {{ getStatusLabel(task.status) }}
+                </span>
+
+                <span *ngIf="task.dueDate" class="due-date">
+                  <mat-icon>event</mat-icon>
+                  {{ task.dueDate | date: 'dd/MM/yyyy' }}
+                </span>
+
+                <span class="created-at">
+                  <mat-icon>schedule</mat-icon>
+                  {{ task.createdAt | date: 'dd/MM/yyyy' }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Ações -->
+            <div class="task-actions">
+              <mat-form-field appearance="outline" class="status-select">
+                <mat-label>Status</mat-label>
+                <mat-select
+                  [value]="getStatusLabel(task.status)"
+                  (selectionChange)="onUpdateStatus(task.id, $event.value)"
+                >
+                  <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                    {{ status.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="onDeleteTask(task.id)"
+                title="Excluir task"
+                class="delete-button"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
