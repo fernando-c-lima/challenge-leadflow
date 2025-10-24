@@ -1,0 +1,74 @@
+<form [formGroup]="filterForm" class="filters">
+  <mat-form-field appearance="fill">
+    <mat-label>Buscar</mat-label>
+    <input matInput placeholder="Nome ou Email" formControlName="search">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="New">New</mat-option>
+      <mat-option value="Qualified">Qualified</mat-option>
+      <mat-option value="Won">Won</mat-option>
+      <mat-option value="Lost">Lost</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="openLeadForm()">
+    Criar Lead
+  </button>
+
+
+</form>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Nome Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let lead"> {{ lead.name }} </td>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let lead"> {{ lead.email }} </td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let lead"> {{ lead.status }} </td>
+  </ng-container>
+
+  <!-- Criado Em Column -->
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef> Criado Em </th>
+    <td mat-cell *matCellDef="let lead"> {{ lead.createdAt | date:'short' }} </td>
+  </ng-container>
+
+  <!-- Ações Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Ações </th>
+    <td mat-cell *matCellDef="let lead">
+    <button mat-icon-button color="primary" (click)="openLeadForm(lead)">
+      <mat-icon>edit</mat-icon>
+    </button>
+
+<button mat-icon-button color="accent" (click)="viewTasks(lead.id)" title="Ver Tarefas">
+    <mat-icon>tasks</mat-icon>
+  </button>
+  
+      <button mat-icon-button color="warn" (click)="deleteLead(lead.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator>
+

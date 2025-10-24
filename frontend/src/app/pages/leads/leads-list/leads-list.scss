@@ -1,0 +1,104 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px auto;
+  max-width: 1000px;
+  padding: 16px;
+  background-color: #f5f9ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  align-items: center;
+
+  button {
+    height: 56px;
+    background-color: #1976d2;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #1565c0;
+    }
+  }
+}
+
+mat-form-field {
+  width: 280px;
+}
+
+table {
+  width: 100%;       
+  max-width: 800px;  
+  margin: 0 auto 20px auto; 
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  th {
+    background-color: #1976d2;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 12px;
+  }
+
+  td {
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+  }
+
+  tr {
+    transition: transform 0.2s;
+
+    &:hover td {
+      background-color: #e3f2fd;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin: 16px auto;
+  }
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+
+  .mat-paginator-range-label {
+    color: #978888;
+  }
+
+  .mat-icon-button {
+    color: #1976d2;
+  }
+}
+
+button mat-icon {
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin: 16px auto;
+  }
+}
