@@ -32,6 +32,8 @@
 appsettings.*.json
 secrets.json
 
+leads.db
+
 # ==========================
 # Front-end (Angular / Node)
 # ==========================
