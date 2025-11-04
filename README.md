@@ -4,52 +4,56 @@ CRUD de **Leads** com **Tasks** associadas.
 
 ---
 
-## ⚙️ Pré-requisitos
+## 🐳 Pré-requisitos
 
-Antes de rodar o projeto, você precisa ter instalado:
+Para rodar o projeto inteiro (Backend, Frontend e Banco de Dados SQLite persistente) você só precisa ter instalado:
 
-- .NET SDK 8 ou 9 – Instalar .NET
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (inclui Docker Engine e Docker Compose)
 
-- Node.js (v18+ recomendado) e npm
-
-- (Opcional) Angular CLI se quiser rodar comandos ng globalmente
+> O projeto foi configurado com Docker Compose para encapsular todas as dependências do .NET, Node.js e banco de dados.
 
 ## 🧪 Tecnologias
 
-- **Backend:** .NET 8/9, EF Core (SQLite), MediatR, AutoMapper, FluentValidation  
+- **Backend:** .NET 8/9, EF Core (SQLite, com migrações automáticas no startup), MediatR, AutoMapper, FluentValidation  
 - **Frontend:** Angular 16+, Angular Material, SCSS  
-
----
-
-> Componentes e módulos foram criados via Angular CLI; lógica customizada está nos serviços e componentes.
 
 ---
 
 ## 💻 Rodando o projeto
 
-### Backend
+Com o Docker Desktop rodando, abra o terminal na raiz do projeto (onde está o `docker-compose.yml`) e execute o seguinte comando:
 
 ```bash
-cd backend
-dotnet restore
-dotnet build
-dotnet ef database update --startup-project src/Api --project src/Infra
-dotnet run --project src/Api
+docker-compose up --build
 ```
+Este comando fará:
 
-- http://localhost:5088/swagger/index.html
+1. Build das imagens do Backend (API) e Frontend (Web).
 
-### Frontend
+2. Criação da Rede interna leadnet.
+
+3. Criação de um Volume persistente para salvar os dados do SQLite (leads.db).
+
+4. Execução automática das Migrações do EF Core na API, criando a tabela Leads se necessário.
+
+## 🌐 Acessos
 ```bash
-cd frontend
-npm install
-npm start
+Serviço	       URL	          Porta Externa
+Frontend      (Web)	          http://localhost:4200	Mapeado para a porta 80 do contêiner
+Backend       (API)	          http://localhost:5088	Mapeado para a porta 8080 do contêiner
+Swagger        UI	           http://localhost:5088/swagger/index.html	Para testar os Endpoints da API
 ```
 
-- App: http://localhost:4200
-- Ajuste a URL da API em src/app/core/services/api.ts se necessário.
-- Certifique-se de que o backend está rodando em http://localhost:5088/api.
+- O frontend se comunica com a API via NGINX proxy através do endereço interno http://api:8080.
 
+## 🛑 Parando o Projeto
+
+Para parar e remover todos os contêineres e a rede:
+```bash
+docker-compose down
+```
+
+- Importante: Se você quiser parar e remover os volumes de dados (para começar com um banco de dados vazio), use: docker-compose down -v
 
 ### 🔌 Endpoints principais
 
