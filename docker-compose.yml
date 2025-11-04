@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ./backend
+    ports:
+      - "5088:8080"
+    networks:
+      - leadnet
+    volumes:
+      # Esta linha mapeia o volume 'sqlitedata' para a pasta /app
+      # Onde o .NET provavelmente cria o arquivo .db
+      - sqlitedata:/app
+
+
+  web:
+    build:
+      context: ./frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    networks:
+      - leadnet
+
+networks:
+  leadnet:
+    driver: bridge
+
+volumes:
+  sqlitedata:
